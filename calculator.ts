@@ -1,17 +1,17 @@
 const node = (
   operator: Operation | null,
   value: number | null,
-  left: any,
-  right: any
-) => {
-  const result = function () {
-    if (value || !operator) return value;
-    return operator.perform(left.result(), right.result());
+  left: INode | null,
+  right: INode | null
+): INode => {
+  const result = (): number => {
+    if (value || !operator || !left || !right) return value ?? 0;
+    return operator.perform(left.result() ?? 0, right.result() ?? 0);
   };
 
-  const toString = function () {
-    if (value || !operator) return value;
-    return operator.toString(left.toString(), right.toString());
+  const toString = (): string => {
+    if (value || !operator || !left || !right) return value?.toString() ?? "";
+    return operator.toString(left.toString() ?? "", right.toString() ?? "");
   };
 
   return {
@@ -24,8 +24,17 @@ const node = (
   };
 };
 
+interface INode {
+  operator: Operation | null;
+  value: number | null;
+  left: INode | null;
+  right: INode | null;
+  result: () => number;
+  toString: () => string;
+}
+
 interface Operation {
-  toString(left: number, right: number): string;
+  toString(left: string, right: string): string;
   perform(left: number, right: number): number;
 }
 
@@ -33,7 +42,7 @@ const add = new (class implements Operation {
   perform(left: number, right: number) {
     return left + right;
   }
-  toString(left: number, right: number) {
+  toString(left: string, right: string) {
     return `(${left} + ${right})`;
   }
 })();
@@ -42,7 +51,7 @@ const subtract = new (class implements Operation {
   perform(left: number, right: number) {
     return left - right;
   }
-  toString(left: number, right: number) {
+  toString(left: string, right: string) {
     return `(${left} - ${right})`;
   }
 })();
@@ -51,7 +60,7 @@ const divide = new (class implements Operation {
   perform(left: number, right: number) {
     return left / right;
   }
-  toString(left: number, right: number) {
+  toString(left: string, right: string) {
     return `(${left} ÷ ${right})`;
   }
 })();
@@ -60,7 +69,7 @@ const multiply = new (class implements Operation {
   perform(left: number, right: number) {
     return left * right;
   }
-  toString(left: number, right: number) {
+  toString(left: string, right: string) {
     return `(${left} x ${right})`;
   }
 })();
