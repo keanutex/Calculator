@@ -1,11 +1,11 @@
 const Node = (operator, value, left, right) => {
   const result = function () {
-    if (value) return value;
+    if (value || !operator) return value;
     return operator.perform(left.result(), right.result());
   };
 
   const toString = function () {
-    if (value) return value;
+    if (value || !operator) return value;
     return operator.toString(left.toString(), right.toString());
   };
 
