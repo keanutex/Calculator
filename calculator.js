@@ -1,34 +1,12 @@
-const assert = require("assert");
-
 const Node = (operator, value, left, right) => {
   const result = function () {
-    switch (operator) {
-      case "+":
-        return left.result() + right.result();
-      case "-":
-        return left.result() - right.result();
-      case "x":
-        return left.result() * right.result();
-      case "÷":
-        return left.result() / right.result();
-      default:
-        return value;
-    }
+    if (value) return value;
+    return operator.perform(left.result(), right.result());
   };
 
   const toString = function () {
-    switch (operator) {
-      case "+":
-        return `(${left.toString()} + ${right.toString()})`;
-      case "-":
-        return `(${left.toString()} - ${right.toString()})`;
-      case "x":
-        return `(${left.toString()} x ${right.toString()})`;
-      case "÷":
-        return `(${left.toString()} ÷ ${right.toString()})`;
-      default:
-        return value.toString();
-    }
+    if (value) return value;
+    return operator.toString(left.toString(), right.toString());
   };
 
   return {
