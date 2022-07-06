@@ -5,7 +5,7 @@ const Node = (operator, value, left, right) => {
   };
 
   const toString = function () {
-    if (value || !operator) return value;
+    if (value || !operator) return value.toString();
     return operator.toString(left.toString(), right.toString());
   };
 
