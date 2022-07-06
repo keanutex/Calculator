@@ -41,6 +41,44 @@ const Node = (operator, value, left, right) => {
   };
 };
 
+class Operation {
+  perform(left, right) {}
+  toString(left, right) {}
+}
+
+class add extends Operation {
+  perform(left, right) {
+    return left + right;
+  }
+  toString(left, right) {
+    return `(${left} + ${right})`;
+  }
+}
+class subtract extends Operation {
+  perform(left, right) {
+    return left - right;
+  }
+  toString(left, right) {
+    return `(${left} - ${right})`;
+  }
+}
+class divide extends Operation {
+  perform(left, right) {
+    return left / right;
+  }
+  toString(left, right) {
+    return `(${left} ÷ ${right})`;
+  }
+}
+class multiply extends Operation {
+  perform(left, right) {
+    return left * right;
+  }
+  toString(left, right) {
+    return `(${left} x ${right})`;
+  }
+}
+
 const tree = Node(
   "÷",
   null,
